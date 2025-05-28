@@ -18,9 +18,9 @@ export const setupServer = () => {
     }),
   );
 
-  app.get('/', (req, resp) => {
-    resp.json({ message: 'hello' });
-  });
+  // app.get('/', (req, resp) => {
+  //   resp.json({ message: 'hello' });
+  // });
 
   app.get('/contacts', async (req, resp) => {
     const dataContacts = await getAllContacts();
