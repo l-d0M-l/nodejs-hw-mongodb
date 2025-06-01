@@ -3,11 +3,14 @@ import cors from 'cors';
 import pino from 'pino-http';
 
 import { getEnvVar } from './utils/getEnvVar.js';
-import { getAllContacts, getContactById } from './services/contacts.js';
+import routes from './routers/contacts.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 const PORT = Number(getEnvVar('PORT', '3000'));
 
 export const setupServer = () => {
   const app = express();
+
   app.use(cors());
 
   app.use(
@@ -18,42 +21,14 @@ export const setupServer = () => {
     }),
   );
 
-  // app.get('/', (req, resp) => {
-  //   resp.json({ message: 'hello' });
-  // });
+  //for all the routes
+  app.use('/', routes);
 
-  app.get('/contacts', async (req, resp) => {
-    const dataContacts = await getAllContacts();
-    resp.json({
-      status: 200,
-      message: 'Successfully found contacts!',
-      data: dataContacts,
-    });
-  });
-  app.get('/contacts/:contactId', async (req, resp) => {
-    const contactId = req.params.contactId;
-    console.log(typeof contactId);
+  //handler of nor found errors
+  app.use(notFoundHandler);
 
-    const dataContact = await getContactById(contactId);
-
-    if (dataContact === null) {
-      resp.status(404).json({
-        message: 'Contact not found',
-      });
-      return;
-    }
-    resp.status(200).json({
-      status: 200,
-      message: `Successfully found contact with id ${contactId}!`,
-      data: dataContact,
-    });
-  });
-
-  app.use((req, res) => {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  });
+  //handler of application errors
+  app.use(errorHandler);
 
   app.listen(PORT, (error) => {
     if (error) {
