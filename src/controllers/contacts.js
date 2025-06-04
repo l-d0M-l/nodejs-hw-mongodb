@@ -7,13 +7,29 @@ import {
 } from '../services/contacts.js';
 import createHttpError from 'http-errors';
 
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
+
 export async function getContactsController(req, resp) {
-  const dataContacts = await getAllContacts();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filters = parseFilterParams(req.query);
+  // console.log(sortBy, sortOrder); good
+
+  const contacts = await getAllContacts(
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filters,
+  );
   resp.json({
     status: 200,
     message: 'Successfully found contacts!',
-    data: dataContacts,
+    data: contacts,
   });
+  // resp.json(contacts);
 }
 
 export async function getContactByIdController(req, resp) {

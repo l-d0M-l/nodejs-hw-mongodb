@@ -12,15 +12,39 @@ import {
   deleteContactController,
 } from '../controllers/contacts.js';
 
-router.get('/contacts', ctrlWrapper(getContactsController));
-router.get('/contacts/:contactId', ctrlWrapper(getContactByIdController));
+import { validateBody } from '../middlewares/validateBody.js';
+import {
+  createContactSchema,
+  updateStudentSchema,
+} from '../validation/contacts.js';
 
-router.post('/contacts', jsonParser, ctrlWrapper(createContactController));
+import { isValidId } from '../middlewares/isValidId.js';
+
+router.get('/contacts', ctrlWrapper(getContactsController));
+router.get(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(getContactByIdController),
+);
+
+router.post(
+  '/contacts',
+  jsonParser,
+  validateBody(createContactSchema),
+  ctrlWrapper(createContactController),
+);
+
 router.patch(
   '/contacts/:contactId',
   jsonParser,
+  isValidId,
+  validateBody(updateStudentSchema),
   ctrlWrapper(updateContactController),
 );
-router.delete('/contacts/:contactId', ctrlWrapper(deleteContactController));
+router.delete(
+  '/contacts/:contactId',
+  isValidId,
+  ctrlWrapper(deleteContactController),
+);
 
 export default router;
