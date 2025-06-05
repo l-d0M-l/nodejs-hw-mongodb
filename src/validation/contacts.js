@@ -20,7 +20,7 @@ export const createContactSchema = Joi.object({
     'any.required': 'Email is required',
   }),
   isFavourite: Joi.boolean(),
-  contactsType: Joi.string().valid('work', 'home', 'personal'),
+  contactType: Joi.string().valid('work', 'home', 'personal'),
 });
 
 export const updateStudentSchema = Joi.object({
