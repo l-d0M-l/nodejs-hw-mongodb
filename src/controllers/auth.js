@@ -16,7 +16,7 @@ export const registerController = async (req, resp) => {
     message: 'Successfully registered a user!',
     data,
   });
-};
+}; 
 
 export const loginController = async (req, resp) => {
   //   console.log(req.body);

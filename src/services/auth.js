@@ -24,6 +24,7 @@ export const registerUser = async (payload) => {
 
 export const loginUser = async ({ email, password }) => {
   const user = await User.findOne({ email });
+  // console.log(`user found ${user}`);
 
   if (user === null) {
     throw new createHttpError.Unauthorized('Email or password is invalid'); //401 error

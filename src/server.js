@@ -4,6 +4,7 @@ import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 
 import { getEnvVar } from './utils/getEnvVar.js';
+import { authenticate } from './middlewares/authenticate.js';
 
 import contactsRoutes from './routers/contacts.js';
 import authRoutes from './routers/auth.js';
@@ -30,7 +31,7 @@ export const setupServer = () => {
   app.use(cookieParser());
 
   //for contacts
-  app.use('/contacts', contactsRoutes);
+  app.use('/contacts', authenticate, contactsRoutes);
 
   //for auth
   app.use('/auth', authRoutes);
