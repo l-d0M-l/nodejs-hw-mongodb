@@ -1,4 +1,6 @@
 import express from 'express';
+import path from 'node:path';
+
 import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
@@ -26,7 +28,10 @@ export const setupServer = () => {
       },
     }),
   );
-
+  app.use(
+    '/uploads',
+    express.static(path.resolve('src', 'uploads', 'photos')),
+  );
   //parsing cookies
   app.use(cookieParser());
 
