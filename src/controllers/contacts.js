@@ -128,7 +128,6 @@ export async function updateContactController(req, resp) {
 export async function deleteContactController(req, resp) {
   const contactId = req.params.contactId;
   const userId = req.user.id;
-  console.log('HELLO WORLDD!!!!!!!!!!!1');
   const deletedContact = await deleteContact(contactId, userId);
 
   if (deletedContact === null) {
