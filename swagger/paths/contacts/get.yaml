@@ -41,7 +41,6 @@ parameters:
     schema:
       type: string
       example: personal
-
   - in: query
     name: isFavourite
     description: Filter by favourite status (true or false)
@@ -68,9 +67,39 @@ responses:
               type: string
               example: Successfully found contacts!
             data:
-              type: array
-              items:
-                $ref: '../../components/schemas/contact.yaml'
+              type: object
+              required:
+                - contacts
+                - page
+                - perPage
+                - totalPages
+                - totalItems
+                - hasPreviousPage
+                - hasNextPage
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '../../components/schemas/contact.yaml'
+                page:
+                  type: integer
+                  example: 1
+                perPage:
+                  type: integer
+                  example: 20
+                totalItems:
+                  type: integer
+                  example: 25
+                totalPages:
+                  type: integer
+                  example: 2
+                hasPreviousPage:
+                  type: boolean
+                  example: false
+                hasNextPage:
+                  type: boolean
+                  example: true
+
   '401':
     $ref: '../../components/responses/401.yaml'
   '404':

@@ -14,7 +14,7 @@
       "url": "http://127.0.0.1:3000"
     },
     {
-      "url": "https://contacts-app-xhow.onrender.com/api-docs/"
+      "url": "https://contacts-app-xhow.onrender.com/"
     }
   ],
   "tags": [
@@ -323,9 +323,47 @@
                       "example": "Successfully found contacts!"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/contact"
+                      "type": "object",
+                      "required": [
+                        "contacts",
+                        "page",
+                        "perPage",
+                        "totalPages",
+                        "totalItems",
+                        "hasPreviousPage",
+                        "hasNextPage"
+                      ],
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/contact"
+                          }
+                        },
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "perPage": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "totalItems": {
+                          "type": "integer",
+                          "example": 25
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "hasPreviousPage": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "hasNextPage": {
+                          "type": "boolean",
+                          "example": true
+                        }
                       }
                     }
                   }
@@ -385,13 +423,11 @@
                       "work"
                     ],
                     "example": "personal",
-                    "default": "personal",
                     "description": "Type of contact"
                   },
                   "isFavourite": {
                     "type": "boolean",
                     "example": true,
-                    "default": false,
                     "description": "Whether the contact is marked as favourite"
                   },
                   "photo": {
