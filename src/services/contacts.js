@@ -1,11 +1,11 @@
 import { ContactsCollection } from '../models/contacts.js';
 
 export const getAllContacts = async (
-  page,
-  perPage,
-  sortBy,
-  sortOrder,
-  filters,
+  page = 1,
+  perPage = 20,
+  sortBy = 'createdAt',
+  sortOrder = 'desc',
+  filters = {},
   userId,
 ) => {
   const skip = page > 0 ? (page - 1) * perPage : 0;

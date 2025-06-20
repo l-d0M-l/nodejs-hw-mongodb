@@ -4,7 +4,7 @@ import {
   registerUser,
   loginUser,
   refreshSession,
-  logoutUser,
+  logoutUser, 
   requestResetPassword,
   resetPassword,
 } from '../services/auth.js';

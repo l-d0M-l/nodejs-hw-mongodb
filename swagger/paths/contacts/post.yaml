@@ -6,31 +6,43 @@ description: 'Creates a new contact for the authenticated user. Requires a valid
 security:
   - bearerAuth: []
 requestBody:
+  required: true
   content:
     multipart/form-data:
       schema:
         type: object
+        required:
+          - name
+          - phoneNumber
         properties:
           name:
             type: string
             example: 'John Doe'
+
           phoneNumber:
             type: string
             example: '+1 780 970 9977'
+
           email:
             type: string
+            format: email
             example: 'johndoe@gmail.com'
+
           contactType:
             type: string
             enum: [personal, home, work]
             example: personal
+            description: Type of contact
+
           isFavourite:
             type: boolean
             example: true
+            description: Whether the contact is marked as favourite
+
           photo:
             type: string
             format: binary
-            description: "The contact's photo file"
+            description: Contact photo file (image)
 responses:
   '201':
     description: 'Create a contact'
@@ -53,4 +65,3 @@ responses:
               $ref: '../../components/schemas/contact.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
-

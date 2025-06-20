@@ -14,7 +14,7 @@
       "url": "http://127.0.0.1:3000"
     },
     {
-      "url": "https://your-deployed-site.com"
+      "url": "https://contacts-app-xhow.onrender.com/api-docs/"
     }
   ],
   "tags": [
@@ -237,6 +237,70 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "Number of page",
+            "schema": {
+              "type": "integer",
+              "example": 1,
+              "default": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "description": "Number of page",
+            "schema": {
+              "type": "integer",
+              "example": 20,
+              "default": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "description": "Field to sort the results by",
+            "schema": {
+              "type": "string",
+              "example": "name",
+              "default": "createdAt"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "description": "`asc` for ascending, `desc` for descending",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "example": "desc",
+              "default": "desc"
+            }
+          },
+          {
+            "in": "query",
+            "name": "contactType",
+            "description": "Filter by contact type (e.g., personal, business)",
+            "schema": {
+              "type": "string",
+              "example": "personal"
+            }
+          },
+          {
+            "in": "query",
+            "name": "isFavourite",
+            "description": "Filter by favourite status (true or false)",
+            "schema": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Get all contacts",
@@ -290,10 +354,15 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "phoneNumber"
+                ],
                 "properties": {
                   "name": {
                     "type": "string",
@@ -305,6 +374,7 @@
                   },
                   "email": {
                     "type": "string",
+                    "format": "email",
                     "example": "johndoe@gmail.com"
                   },
                   "contactType": {
@@ -314,16 +384,20 @@
                       "home",
                       "work"
                     ],
-                    "example": "personal"
+                    "example": "personal",
+                    "default": "personal",
+                    "description": "Type of contact"
                   },
                   "isFavourite": {
                     "type": "boolean",
-                    "example": true
+                    "example": true,
+                    "default": false,
+                    "description": "Whether the contact is marked as favourite"
                   },
                   "photo": {
                     "type": "string",
                     "format": "binary",
-                    "description": "The contact's photo file"
+                    "description": "Contact photo file (image)"
                   }
                 }
               }

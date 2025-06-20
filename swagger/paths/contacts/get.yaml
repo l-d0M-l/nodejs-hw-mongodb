@@ -5,6 +5,50 @@ operationId: getContacts
 description: 'Retrieves a list of all contacts associated with the authenticated user. Requires a valid bearer token. Useful for displaying or managing contact lists.'
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    description: 'Number of page'
+    schema:
+      type: integer
+      example: 1
+      default: 1
+  - in: query
+    name: perPage
+    description: 'Number of page'
+    schema:
+      type: integer
+      example: 20
+      default: 20
+  - in: query
+    name: sortBy
+    description: 'Field to sort the results by'
+    schema:
+      type: string
+      example: name
+      default: createdAt
+  - in: query
+    name: sortOrder
+    description: '`asc` for ascending, `desc` for descending'
+    schema:
+      type: string
+      enum: ['asc', 'desc']
+      example: desc
+      default: desc
+  - in: query
+    name: contactType
+    description: Filter by contact type (e.g., personal, business)
+    schema:
+      type: string
+      example: personal
+
+  - in: query
+    name: isFavourite
+    description: Filter by favourite status (true or false)
+    schema:
+      type: boolean
+      example: true
+
 responses:
   '200':
     description: 'Get all contacts'
